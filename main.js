@@ -6,19 +6,21 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+let mainWindow = null;
+
 function createWindow() {
-  const win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 460,
     height: 300,
     resizable: false,
     frame: false,
     backgroundColor: '#f4ecdc',
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'preload.cjs'),
     },
   });
 
-  win.loadFile('index.html');
+  mainWindow.loadFile('index.html');
 }
 
 function getMp3FilesRecursive(dirPath) {
@@ -56,6 +58,14 @@ ipcMain.handle('select-folder', async () => {
   }));
 
   return { folderName, tracks };
+});
+
+ipcMain.on('window-minimize', () => {
+  mainWindow?.minimize();
+});
+
+ipcMain.on('window-close', () => {
+  mainWindow?.close();
 });
 
 app.whenReady().then(createWindow);

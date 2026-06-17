@@ -239,6 +239,12 @@ html, body {
   width: 28px;
 }
 
+.ctrl-btn.active {
+  background: #1c1c1c;
+  color: #f3b340;
+  border-color: #1c1c1c;
+}
+
 .right-controls {
   margin-left: auto;
   display: flex;
@@ -268,6 +274,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   font-size: 12px;
   font-weight: bold;
   border-bottom: 2px solid #1c1c1c;
