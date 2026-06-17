@@ -1,13 +1,14 @@
 {
   "name": "moosik",
   "version": "1.0.0",
-  "description": "",
+  "description": "A retro-styled folder-based mp3 player",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "cross-env CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder"
   },
   "keywords": [],
-  "author": "",
+  "author": "Sakib Muhtasim",
   "license": "ISC",
   "devEngines": {
     "packageManager": {
@@ -18,6 +19,27 @@
   },
   "type": "module",
   "devDependencies": {
-    "electron": "^42.4.0"
+    "cross-env": "^7.0.3",
+    "electron": "^42.4.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.sakib.moosik",
+    "productName": "Moosik",
+    "files": [
+      "main.js",
+      "preload.cjs",
+      "index.html",
+      "style.css",
+      "renderer.js",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }
