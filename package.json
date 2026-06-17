@@ -32,10 +32,12 @@
       "index.html",
       "style.css",
       "renderer.js",
+      "icon.ico",
       "package.json"
     ],
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "icon.ico"
     },
     "nsis": {
       "oneClick": false,

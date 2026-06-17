@@ -72,13 +72,55 @@ function renderPlaylists() {
   playlists.forEach((playlist, index) => {
     const item = document.createElement('div');
     item.className = 'playlist-item' + (index === currentPlaylistIndex ? ' active' : '');
-    item.innerHTML = `<span>${playlist.name}</span><span>${playlist.tracks.length} tracks</span>`;
-    item.addEventListener('click', () => {
+
+    const info = document.createElement('div');
+    info.className = 'playlist-item-info';
+    info.innerHTML = `<span>${playlist.name}</span><span>${playlist.tracks.length} tracks</span>`;
+    info.addEventListener('click', () => {
       playPlaylist(index);
       playlistPanel.classList.add('hidden');
     });
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'playlist-delete-btn';
+    deleteBtn.textContent = '✕';
+    deleteBtn.title = 'Delete playlist';
+    deleteBtn.addEventListener('click', (event) => {
+      event.stopPropagation();
+      deletePlaylist(index);
+    });
+
+    item.appendChild(info);
+    item.appendChild(deleteBtn);
     playlistList.appendChild(item);
   });
+}
+
+function deletePlaylist(index) {
+  const playlist = playlists[index];
+  if (!playlist) return;
+
+  const confirmed = window.confirm(`Delete playlist "${playlist.name}"? This won't delete your mp3 files, just removes it from Moosik.`);
+  if (!confirmed) return;
+
+  const wasCurrentPlaylist = index === currentPlaylistIndex;
+
+  playlists.splice(index, 1);
+
+  if (wasCurrentPlaylist) {
+    stopCurrent();
+    audio.removeAttribute('src');
+    currentPlaylistIndex = -1;
+    currentTrackIndex = -1;
+    trackInfo.textContent = 'No track loaded';
+    timeDisplay.textContent = '00:00';
+    progressBar.value = 0;
+  } else if (index < currentPlaylistIndex) {
+    currentPlaylistIndex -= 1;
+  }
+
+  savePlaylists();
+  renderPlaylists();
 }
 
 function playPlaylist(playlistIndex) {

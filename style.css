@@ -294,21 +294,67 @@ html, body {
 .playlist-item {
   border: 2px solid #1c1c1c;
   background: #fff;
-  padding: 6px 8px;
-  font-size: 12px;
-  font-weight: bold;
-  cursor: pointer;
   display: flex;
-  justify-content: space-between;
-}
-
-.playlist-item:hover {
-  background: #f3b340;
+  align-items: stretch;
 }
 
 .playlist-item.active {
   background: #1c1c1c;
   color: #f3b340;
+}
+
+.playlist-item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.playlist-item-info span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.playlist-item-info span:last-child {
+  flex-shrink: 0;
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.playlist-item:not(.active) .playlist-item-info:hover {
+  background: #f3b340;
+}
+
+.playlist-delete-btn {
+  flex-shrink: 0;
+  width: 28px;
+  border: none;
+  border-left: 2px solid #1c1c1c;
+  background: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.playlist-delete-btn:hover {
+  background: #1c1c1c;
+  color: #f3b340;
+}
+
+.playlist-item.active .playlist-delete-btn {
+  border-left-color: #f3b340;
 }
 
 .empty-msg {
